@@ -1,13 +1,6 @@
 import React, {Component} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  ImageBackground,
-  Image,
-} from 'react-native';
+import CarItem from './component/CarItem';
+import {View, StyleSheet, StatusBar} from 'react-native';
 
 class App extends Component {
   constructor(props) {
@@ -18,34 +11,8 @@ class App extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <ImageBackground
-          source={require('./foto/logo2.jpg')}
-          style={styles.foto}>
-          <Text style={styles.judul}>LOGIN</Text>
-          {/* <Text style={styles.instruction}> GET START</Text> */}
-          <TextInput style={styles.input} placeholder="USERNAME" />
-          <TextInput
-            style={styles.input}
-            placeholder="PASSWORD"
-            secureTextEntry
-          />
-
-          <View style={styles.contentBtn}>
-            <TouchableOpacity
-              style={styles.btnCon}
-              onPress={() => alert('ceritanya login berhasil')}>
-              <Text style={styles.btn}>Login</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.btnCon}>
-              <Text
-                style={styles.btn}
-                onPress={() => alert('ceritanya oindah page')}>
-                Sign Up
-              </Text>
-            </TouchableOpacity>
-          </View>
-          <TouchableOpacity style={styles.btngoogle}></TouchableOpacity>
-        </ImageBackground>
+        <CarItem />
+        <StatusBar style="auto" />
       </View>
     );
   }
@@ -56,27 +23,24 @@ let styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'grey',
+    backgroundColor: '#fff',
   },
-  foto: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+  carContainer: {
+    height: '100%',
     width: '100%',
   },
-  judul: {
-    fontSize: 30,
-    textAlign: 'center',
-    margin: 10,
-    color: 'white',
-    fontFamily: 'DancingScript-Bold',
+  titles: {
+    marginTop: '30%',
+    width: '100%',
+    alignItems: 'center',
   },
-  input: {
-    width: '90%',
-    backgroundColor: 'white',
-    padding: 15,
-    marginBottom: 10,
-    borderRadius: 50,
+  title: {
+    fontSize: 40,
+    fontWeight: '500',
+  },
+  subtitle: {
+    fontSize: 10,
+    color: '#5c5e62',
   },
   contentBtn: {
     flexDirection: 'row',
@@ -94,6 +58,12 @@ let styles = StyleSheet.create({
     fontSize: 18,
     color: 'black',
     textAlign: 'center',
+  },
+  img: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
+    position: 'absolute',
   },
 });
 
