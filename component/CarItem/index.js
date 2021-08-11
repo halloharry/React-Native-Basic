@@ -4,7 +4,8 @@ import StyleButton from '../StyleButton';
 import {View, Text, ImageBackground} from 'react-native';
 
 const Caritem = props => {
-  const {name, tagline, taglineLink, img} = props;
+  const {name, tagline, taglineLink, img} = props.car;
+
   return (
     <View style={styles.carContainer}>
       <ImageBackground source={img} style={styles.img} />

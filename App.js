@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import CarItem from './component/CarItem';
+// import CarItem from './component/CarItem';
 import {View, StyleSheet, StatusBar} from 'react-native';
+import CarList from './component/CarsList';
 
 class App extends Component {
   constructor(props) {
@@ -11,13 +12,14 @@ class App extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <CarItem
+        {/* <CarItem
           name={'Model 3'}
           tagline={'Order Online For'}
           taglineLink={'Touchless Delivery'}
           img={require('./asset/images/Model3.jpeg')}
-        />
+        /> */}
 
+        <CarList />
         <StatusBar style="auto" />
       </View>
     );
