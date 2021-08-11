@@ -11,7 +11,13 @@ class App extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <CarItem />
+        <CarItem
+          name={'Model 3'}
+          tagline={'Order Online For'}
+          taglineLink={'Touchless Delivery'}
+          img={require('./asset/images/Model3.jpeg')}
+        />
+
         <StatusBar style="auto" />
       </View>
     );

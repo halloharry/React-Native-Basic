@@ -24,6 +24,16 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
     position: 'absolute',
   },
+
+  btnCon: {
+    position: 'absolute',
+    bottom: 50,
+    width: '100%',
+  },
+
+  subLink: {
+    textDecorationLine: 'underline',
+  },
 });
 
 export default styles;
