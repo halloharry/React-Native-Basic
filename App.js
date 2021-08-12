@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 // import CarItem from './component/CarItem';
 import {View, StyleSheet, StatusBar} from 'react-native';
 import CarList from './component/CarsList';
+import Header from './component/Header';
 
 class App extends Component {
   constructor(props) {
@@ -18,7 +19,7 @@ class App extends Component {
           taglineLink={'Touchless Delivery'}
           img={require('./asset/images/Model3.jpeg')}
         /> */}
-
+        <Header />
         <CarList />
         <StatusBar style="auto" />
       </View>
