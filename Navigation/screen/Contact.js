@@ -3,7 +3,7 @@ import {Image} from 'react-native';
 import {StyleSheet, Text, View, TouchableOpacity, FlatList} from 'react-native';
 import {ListItem} from 'react-native-elements';
 import {Avatar} from 'react-native-elements';
-import ContactDetail from '../ContactDetail';
+import ContactDetail from './ContactDetail';
 
 export default class Contacts extends Component {
   constructor(props) {
@@ -186,6 +186,7 @@ export default class Contacts extends Component {
       <ListItem
         onPress={() => {
           //   Alert.alert(l.nama,"asd");
+
           this.setState({
             status: true,
             contactDetail: item,
@@ -238,14 +239,6 @@ export default class Contacts extends Component {
 
     return (
       <View style={{flex: 1}}>
-        {/* <FlatList
-          extraData={this.state}
-          data={this.state.calls}
-          keyExtractor={item => {
-            return item.id;
-          }}
-          renderItem={this.renderItem}
-        /> */}
         <FlatList
           data={this.state.users}
           keyExtractor={(item, idx) => idx}
@@ -305,3 +298,18 @@ const styles = StyleSheet.create({
     marginLeft: 15,
   },
 });
+
+// import * as React from 'react';
+// import {View, Text} from 'react-native';
+
+// export default function Contact({navigation}) {
+//   return (
+//     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+//       <Text
+//         onPress={() => navigation.navigate('Login')}
+//         style={{fontSize: 26, fontWeight: 'bold'}}>
+//         Settings Screen
+//       </Text>
+//     </View>
+//   );
+// }

@@ -1,14 +1,6 @@
 import React, {Component} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  ScrollView,
-  TouchableOpacity,
-  FlatList,
-} from 'react-native';
-import Contacts from '../Contact';
+import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
+import Contacts from './Contact';
 
 export default class ContactDetail extends Component {
   constructor(props) {
@@ -111,3 +103,18 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
 });
+
+// import * as React from 'react';
+// import {View, Text} from 'react-native';
+
+// export default function ContactDetail({navigation}) {
+//   return (
+//     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+//       <Text
+//         onPress={() => navigation.navigate('Login')}
+//         style={{fontSize: 26, fontWeight: 'bold'}}>
+//         Home Screen
+//       </Text>
+//     </View>
+//   );
+// }

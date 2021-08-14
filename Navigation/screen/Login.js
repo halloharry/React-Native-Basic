@@ -25,7 +25,7 @@ class Login extends Component {
       return this.setState({
         errorUsername: 'salah usernam',
       });
-    this.props.navigation.navigate('ContactList');
+    this.props.navigation.navigate('Contact');
     // return this.props.login({username});
   };
 
@@ -117,3 +117,18 @@ let styles = StyleSheet.create({
 });
 
 export default Login;
+
+// import * as React from 'react';
+// import {View, Text} from 'react-native';
+
+// export default function Login({navigation}) {
+//   return (
+//     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+//       <Text
+//         onPress={() => alert('This is the "Login" screen.')}
+//         style={{fontSize: 26, fontWeight: 'bold'}}>
+//         Details Screen
+//       </Text>
+//     </View>
+//   );
+// }
