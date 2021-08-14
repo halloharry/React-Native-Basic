@@ -1,54 +1,38 @@
-import React, {Component} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  ImageBackground,
-  Image,
-} from 'react-native';
+import * as React from 'react';
+import {View, StyleSheet, ImageBackground} from 'react-native';
+import Contacts from './screens/Contact';
+import Login from './screens/Login';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import ContactDetail from './screens/ContactDetail';
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+// function HomeScreen() {
+//   return (
+//     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+//       <Text>Home Screen</Text>
+//     </View>
+//   );
+// }
+// function HomeScreen() {
+//   return (
+//     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+//       <Login />
+//     </View>
+//   );
+// }
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <ImageBackground
-          source={require('./foto/logo2.jpg')}
-          style={styles.foto}>
-          <Text style={styles.judul}>LOGIN</Text>
-          {/* <Text style={styles.instruction}> GET START</Text> */}
-          <TextInput style={styles.input} placeholder="USERNAME" />
-          <TextInput
-            style={styles.input}
-            placeholder="PASSWORD"
-            secureTextEntry
-          />
+const Stack = createNativeStackNavigator();
 
-          <View style={styles.contentBtn}>
-            <TouchableOpacity
-              style={styles.btnCon}
-              onPress={() => alert('ceritanya login berhasil')}>
-              <Text style={styles.btn}>Login</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.btnCon}>
-              <Text
-                style={styles.btn}
-                onPress={() => alert('ceritanya oindah page')}>
-                Sign Up
-              </Text>
-            </TouchableOpacity>
-          </View>
-          <TouchableOpacity style={styles.btngoogle}></TouchableOpacity>
-        </ImageBackground>
-      </View>
-    );
-  }
+function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Contact" component={Contacts} />
+        <Stack.Screen name="ContactDetail" component={ContactDetail} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
 }
 
 let styles = StyleSheet.create({
@@ -63,37 +47,6 @@ let styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
-  },
-  judul: {
-    fontSize: 30,
-    textAlign: 'center',
-    margin: 10,
-    color: 'white',
-    fontFamily: 'DancingScript-Bold',
-  },
-  input: {
-    width: '90%',
-    backgroundColor: 'white',
-    padding: 15,
-    marginBottom: 10,
-    borderRadius: 50,
-  },
-  contentBtn: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '90%',
-  },
-  btnCon: {
-    backgroundColor: 'yellow',
-    color: 'black',
-    padding: 15,
-    width: '45%',
-    borderRadius: 50,
-  },
-  btn: {
-    fontSize: 18,
-    color: 'black',
-    textAlign: 'center',
   },
 });
 
