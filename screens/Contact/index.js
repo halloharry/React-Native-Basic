@@ -1,9 +1,9 @@
+import axios from 'axios';
 import React, {Component} from 'react';
-import {Image} from 'react-native';
 import {StyleSheet, Text, View, TouchableOpacity, FlatList} from 'react-native';
-import {ListItem} from 'react-native-elements';
-import {Avatar} from 'react-native-elements';
-import ContactDetail from '../ContactDetail';
+import {ListItem, Button, Avatar} from 'react-native-elements';
+import SearchBar from 'react-native-elements/dist/searchbar/SearchBar-ios';
+import {Icon} from 'react-native-elements';
 
 export default class Contacts extends Component {
   constructor(props) {
@@ -146,55 +146,83 @@ export default class Contacts extends Component {
       // ],
       users: [],
       refresh: false,
-      limit: 15,
+      limit: 90,
       page: 1,
-      status: false,
-      contactDetail: {},
+      id: '',
     };
   }
 
-  statusHandle = () => {
-    this.setState({contactDetail: false});
-    this.props.navigation.navigate('ContactDetail');
-  };
-
+  // fetching data from fake api
   getData = (page = 1) => {
     console.log('page:', page);
-    this.setState({
-      refresh: true,
-    });
+    // this.setState({
+    //   refresh: true,
+    // });
     const {limit} = this.state;
-    fetch(
-      `https://jsonplaceholder.typicode.com/comments?_limit=${limit}&_page=${page}`,
-    )
-      .then(response => response.json())
-      .then(users => {
-        let newData = [];
-        if (page === 1) newData = users;
-        else newData = [...this.state.users, ...users];
-
+    axios
+      .get(`http://192.168.43.49:3000/users?_limit=${limit}&_page=${page}`)
+      .then(res => {
+        const users = res.data;
         this.setState({
-          users: newData,
+          users: users,
           page,
           refresh: false,
         });
       });
   };
 
+  delete = id => {
+    let copyUser = this.state.users;
+
+    let index = copyUser.findIndex(item => item.id === id);
+    copyUser.splice(index, 1);
+
+    this.setState(() => ({
+      users: copyUser,
+    }));
+    console.log('delktewwss', id);
+  };
+
+  sendDataUser = item => {
+    this.props.navigation.navigate('ContactDetail', item);
+  };
+
+  addNew = item => {
+    this.props.navigation.navigate('AddNew');
+  };
+
+  renderHeader = () => {
+    return <SearchBar placeholder="Type Here ..." />;
+  };
+
   renderItem = ({item}) => {
     return (
-      <ListItem
+      <ListItem.Swipeable
         onPress={() => {
-          //   Alert.alert(l.nama,"asd");
-          this.setState({
-            status: true,
-            contactDetail: item,
-          });
-        }}>
+          this.sendDataUser(item);
+        }}
+        leftContent={
+          <Button
+            title="LOGIN"
+            icon={{name: 'info', color: 'white'}}
+            buttonStyle={{minHeight: '100%'}}
+            onPress={() => navigation.navigate('Login')}
+          />
+        }
+        rightContent={
+          <Button
+            title="Delete"
+            icon={{name: 'delete', color: 'white'}}
+            buttonStyle={{minHeight: '100%', backgroundColor: 'red'}}
+            // onPress={() => console.log(item)}
+            onPress={() => this.delete(item.id)}
+          />
+        }>
         <ListItem.Content>
           <View style={styles.row}>
             <Avatar
-              // source={{uri: item.image}}
+              rounded
+              source={{uri: item.image}}
               style={styles.pic}
               title={item.name.substr(0, 1)}
               titleStyle={{color: 'red'}}
@@ -217,7 +245,7 @@ export default class Contacts extends Component {
             </View>
           </View>
         </ListItem.Content>
-      </ListItem>
+      </ListItem.Swipeable>
     );
   };
 
@@ -226,26 +254,9 @@ export default class Contacts extends Component {
   }
 
   render() {
-    if (this.state.status) {
-      return (
-        <ContactDetail
-          contactList={this.state.contactDetail}
-          status={this.statusHandle}
-          renderItem={this.renderItem}
-        />
-      );
-    }
-
+    // console.log(this.state.users);
     return (
       <View style={{flex: 1}}>
-        {/* <FlatList
-          extraData={this.state}
-          data={this.state.calls}
-          keyExtractor={item => {
-            return item.id;
-          }}
-          renderItem={this.renderItem}
-        /> */}
         <FlatList
           data={this.state.users}
           keyExtractor={(item, idx) => idx}
@@ -254,10 +265,17 @@ export default class Contacts extends Component {
           refreshing={this.state.refresh}
           onEndReached={() => this.getData(this.state.page + 1)}
           onEndReachedThreshold={0.6}
+          ListHeaderComponent={this.renderHeader}
         />
-        <TouchableOpacity>
-          <Text onPress={() => console.warn('joko')}>PENCET INI</Text>
+        <TouchableOpacity style={styles.row}>
+          <Text style={styles.nameTxt} onPress={this.props.logoutHandler}>
+            <Icon name="logout" />
+          </Text>
+          <Text style={styles.nameTxt} onPress={this.addNew}>
+            <Icon name="rowing" />
+          </Text>
         </TouchableOpacity>
+        <TouchableOpacity></TouchableOpacity>
       </View>
     );
   }

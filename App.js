@@ -1,54 +1,115 @@
-import * as React from 'react';
-import {View, StyleSheet, Text, ImageBackground} from 'react-native';
+import React, {Component} from 'react';
+import {View, StyleSheet, Text} from 'react-native';
 import Contacts from './screens/Contact';
 import Login from './screens/Login';
+import AddNew from './screens/AddNew';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import ContactDetail from './screens/ContactDetail';
-import {Button} from 'react-native';
-// import ApiFetch from './screens/API';
-// import ListFetch from './screens/UserList';
+import {Button, ListItem, Icon} from 'react-native-elements';
 import MainContainer from './Navigation/MainContainer';
+
+const Stack = createNativeStackNavigator();
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: '',
+      pass: '',
+      userLogin: '',
+    };
+  }
+
+  loginHandler = obj => {
+    this.setState({
+      userLogin: obj.username,
+    });
+  };
+
+  logoutHandler = () => {
+    this.setState({
+      userLogin: '',
+    });
+  };
+
+  render() {
+    const {userLogin} = this.state;
+    return (
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Home">
+          {userLogin === '' ? (
+            <>
+              <Stack.Screen
+                options={{headerShown: false}}
+                name="Home"
+                component={HomeScreen}
+              />
+              <Stack.Screen
+                options={{headerShown: false}}
+                name="Login"
+                children={props => (
+                  <Login {...props} loginHandler={this.loginHandler} />
+                )}
+              />
+            </>
+          ) : (
+            <>
+              <Stack.Screen
+                options={{headerShown: false}}
+                name="Contact"
+                children={props => (
+                  <Contacts {...props} logoutHandler={this.logoutHandler} />
+                )}></Stack.Screen>
+              <Stack.Screen
+                name="ContactDetail"
+                children={props => (
+                  <ContactDetail
+                    {...props}
+                    logoutHandler={this.logoutHandler}
+                  />
+                )}
+              />
+              <Stack.Screen
+                name="AddNew"
+                children={props => (
+                  <AddNew {...props} logoutHandler={this.logoutHandler} />
+                )}
+              />
+            </>
+          )}
+        </Stack.Navigator>
+      </NavigationContainer>
+      // <MainContainer />
+    );
+  }
+}
 
 function HomeScreen({navigation}) {
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Home Screen</Text>
-      <Button
-        title="Go to Login"
-        onPress={() => navigation.navigate('Login')}
-      />
-    </View>
-  );
-}
-function ContactList({navigation}) {
-  return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Contact List</Text>
-      <Button
-        title="Go to Contact"
-        onPress={() => navigation.navigate('Contact')}
-      />
-    </View>
-  );
-}
-
-const Stack = createNativeStackNavigator();
-
-function App() {
-  return (
-    // <NavigationContainer>
-    //   <Stack.Navigator initialRouteName="Home">
-    //     <Stack.Screen name="Home" component={HomeScreen} />
-    //     <Stack.Screen name="Login" component={Login} />
-    //     <Stack.Screen name="MainApp" component={MainContainer} />
-    //     {/* <Stack.Screen name="ApiFetch" component={ApiFetch} /> */}
-    //     <Stack.Screen name="ContactList" component={ContactList} />
-    //     <Stack.Screen name="Contact" component={Contacts} />
-    //     <Stack.Screen name="ContactDetail" component={ContactDetail} />
-    //   </Stack.Navigator>
-    // </NavigationContainer>
-    <MainContainer></MainContainer>
+    <>
+      <ListItem.Swipeable
+        leftContent={
+          <Button
+            title="LOGIN"
+            icon={{name: 'info', color: 'white'}}
+            buttonStyle={{minHeight: '100%'}}
+            onPress={() => navigation.navigate('Login')}
+          />
+        }
+        rightContent={
+          <Button
+            title="Delete"
+            icon={{name: 'delete', color: 'white'}}
+            buttonStyle={{minHeight: '100%', backgroundColor: 'red'}}
+          />
+        }>
+        <Icon name="add-to-home-screen" />
+        <ListItem.Content>
+          <ListItem.Title>Hello Swiper</ListItem.Title>
+        </ListItem.Content>
+        <ListItem.Chevron />
+      </ListItem.Swipeable>
+    </>
   );
 }
 

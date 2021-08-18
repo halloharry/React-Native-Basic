@@ -7,61 +7,72 @@ import {
   ImageBackground,
 } from 'react-native';
 import {Input} from 'react-native-elements/dist/input/Input';
-import {Asset} from 'expo';
 
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      password: '',
-      errorUsername: '',
-      isReady: false,
+      name: '',
+      image: '',
+      phone: '',
+      id: '',
     };
   }
 
-  handleClick = () => {
-    const {username} = this.state;
-    // console.warn('login');
-    if (username === '')
-      return this.setState({
-        errorUsername: 'salah usernam',
-      });
-    // this.props.navigation.navigate('ContactList');
-    return this.props.loginHandler({username});
+  AddNew = newContact => {
+    // console.log('data baru', newContact);
+    console.log('jggj', newList);
+    console.log('jggsasaasj', this.state.name);
+    let newList = {
+      name: this.state.name,
+      image: this.state.image,
+      phone: this.state.phone,
+    };
+    let copyWorker = newList;
+    newContact.id = copyWorker.length + 1;
+
+    copyWorker.push(newContact);
+
+    this.props.navigation.navigate('Contact', newContact);
+  };
+
+  back = () => {
+    this.props.navigation.navigate('Contact');
   };
 
   render() {
+    console.log('namaaaa', this.state.name);
     return (
       <>
         <View style={styles.container}>
           <ImageBackground
             source={require('../../foto/logo2.jpg')}
             style={styles.foto}>
-            <Text style={styles.judul}>LOGIN PAGE</Text>
+            <Text style={styles.judul}>ADD NEW CONTACT</Text>
             <Input
               style={styles.input}
-              placeholder="USERNAME"
-              errorMessage={this.state.errorUsername}
-              onChangeText={value => this.setState({username: value})}
+              placeholder="NAME"
+              //   errorMessage={this.state.errorUsername}
+              onChangeText={value => this.setState({name: value})}
             />
             <Input
               style={styles.input}
-              placeholder="PASSWORD"
-              secureTextEntry
-              onChangeText={value => this.setState({password: value})}
+              placeholder="PHONE"
+              onChangeText={value => this.setState({phone: value})}
+            />
+            <Input
+              style={styles.input}
+              placeholder="INITIAL"
+              //   secureTextEntry
+              onChangeText={value => this.setState({image: value})}
             />
             <View style={styles.contentBtn}>
-              <TouchableOpacity
-                style={styles.btnCon}
-                onPress={this.handleClick}>
-                <Text style={styles.btn}>Login</Text>
+              <TouchableOpacity style={styles.btnCon} onPress={this.AddNew}>
+                <Text style={styles.btn}>Save</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.btnCon}>
-                <Text
-                  style={styles.btn}
-                  onPress={() => alert('ceritanya oindah page')}>
-                  Sign Up
+                <Text style={styles.btn} onPress={this.back}>
+                  Back
                 </Text>
               </TouchableOpacity>
             </View>
@@ -94,7 +105,7 @@ let styles = StyleSheet.create({
     fontFamily: 'DancingScript-Bold',
   },
   input: {
-    width: '70%',
+    width: '90%',
     backgroundColor: 'white',
     padding: 15,
     marginBottom: 10,

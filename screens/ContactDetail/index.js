@@ -1,14 +1,6 @@
 import React, {Component} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  ScrollView,
-  TouchableOpacity,
-  FlatList,
-} from 'react-native';
-import Contacts from '../Contact';
+import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
+import {Icon} from 'react-native-elements';
 
 export default class ContactDetail extends Component {
   constructor(props) {
@@ -16,40 +8,42 @@ export default class ContactDetail extends Component {
     this.state = {
       status: false,
     };
+    console.log('Params:', this.props.route.params);
   }
 
   handleClick = () => {
-    this.setState({
-      status: true,
-    });
-    if (this.state.status) return <Contacts />;
+    this.props.navigation.navigate('ContactDetail', item);
   };
 
   render() {
-    const {contactList} = this.props;
-    console.log(contactList.name);
+    const {name, status, image, phone} = this.props.route.params;
+    // console.log(contactList.name);
+    contactList = {};
+
     return (
       <View style={styles.container}>
         <View style={styles.header}>
           <View style={styles.headerContent}>
-            <Image
-              style={styles.avatar}
-              source={{uri: `${contactList.image}`}}
-            />
-            <Text style={styles.name}>{contactList.name}</Text>
+            <Image style={styles.avatar} source={{uri: `${image}`}} />
+            <Text style={styles.username}>{name}</Text>
           </View>
         </View>
 
         <View style={styles.body}>
           <View style={styles.box}>
-            <Text style={styles.title}>Phone Number : {contactList.HP}</Text>
+            <Text style={styles.title}>Phone : {phone}</Text>
           </View>
           <View style={styles.box}>
-            <Text style={styles.title}>Status : {contactList.status}</Text>
+            <Text style={styles.title}>Status : {status}</Text>
           </View>
           <View style={styles.btn}>
-            <TouchableOpacity onPress={this.handleClick}>
-              <Text>Back</Text>
+            <TouchableOpacity>
+              <Text style={styles.btn} onPress={this.props.logoutHandler}>
+                <Icon name="logout" />
+              </Text>
+              <Text style={styles.btn} onPress={this.props.logoutHandler}>
+                <Icon name="edit" />
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -84,8 +78,9 @@ const styles = StyleSheet.create({
     marginLeft: 4,
   },
   btn: {
+    width: 70,
     marginLeft: 'auto',
-    width: 40,
+    padding: 5,
     height: 40,
   },
   body: {
@@ -105,8 +100,8 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   username: {
-    color: '#20B2AA',
-    fontSize: 22,
+    color: 'black',
+    fontSize: 28,
     alignSelf: 'center',
     marginLeft: 10,
   },
