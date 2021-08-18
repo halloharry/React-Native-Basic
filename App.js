@@ -5,6 +5,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {Button, ListItem, Icon} from 'react-native-elements';
 import Chat from './screen/Chat/Chat';
+import Home from './component/Home';
 
 const Stack = createNativeStackNavigator();
 class App extends Component {
