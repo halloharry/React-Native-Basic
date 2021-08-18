@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
+import {View, StyleSheet, Text} from 'react-native';
+import Login from './screen/Login';
 import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-import {View, Text, StyleSheet, StatusBar} from 'react-native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {Button, ListItem, Icon} from 'react-native-elements';
+import Chat from './screen/Chat/Chat';
 
-import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
-
-const Stack = createStackNavigator();
-
+const Stack = createNativeStackNavigator();
 class App extends Component {
   constructor(props) {
     super(props);
@@ -29,54 +29,99 @@ class App extends Component {
     });
   };
 
-  Navigation = () => {
+  render() {
+    const {userLogin} = this.state;
     return (
       <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen
-            name="login"
-            component={loginScreen}
-            option={{headerShown: false}}
-            children={props => (
-              <Login {...props} loginHandler={this.loginHandler} />
-            )}></Stack.Screen>
-          <Stack.Screen
-            name="login"
-            component={loginScreen}
-            option={{headerShown: false}}></Stack.Screen>
+        <Stack.Navigator initialRouteName="Home">
+          {userLogin === '' ? (
+            <>
+              <Stack.Screen
+                options={{headerShown: false}}
+                name="Home"
+                component={HomeScreen}
+              />
+              <Stack.Screen
+                options={{headerShown: false}}
+                name="Login"
+                children={props => (
+                  <Login {...props} loginHandler={this.loginHandler} />
+                )}
+              />
+            </>
+          ) : (
+            <>
+              <Stack.Screen
+                options={{headerShown: false}}
+                name="Chat"
+                children={props => (
+                  <Chat {...props} logoutHandler={this.logoutHandler} />
+                )}></Stack.Screen>
+              {/* <Stack.Screen
+                name="ContactDetail"
+                children={props => (
+                  <ContactDetail
+                    {...props}
+                    logoutHandler={this.logoutHandler}
+                  />
+                )}
+              />
+              <Stack.Screen
+                name="AddNew"
+                children={props => (
+                  <AddNew {...props} logoutHandler={this.logoutHandler} />
+                )}
+              /> */}
+            </>
+          )}
         </Stack.Navigator>
       </NavigationContainer>
-    );
-  };
-
-  render() {
-    return (
-      <>
-        <PaperProvider theme={theme}>
-          <StatusBar barStyle="dark-content" backgroundColor="green" />
-          <View style={styles.container}>
-            <Navigation />
-          </View>
-        </PaperProvider>
-      </>
+      // <MainContainer />
     );
   }
 }
 
-const theme = {
-  ...DefaultTheme,
-  roundness: 2,
-  colors: {
-    ...DefaultTheme.colors,
-    primary: 'green',
-    accent: '#f1c40f',
-  },
-};
+function HomeScreen({navigation}) {
+  return (
+    <>
+      <ListItem.Swipeable
+        leftContent={
+          <Button
+            title="LOGIN"
+            icon={{name: 'info', color: 'white'}}
+            buttonStyle={{minHeight: '100%'}}
+            onPress={() => navigation.navigate('Login')}
+          />
+        }
+        rightContent={
+          <Button
+            title="Delete"
+            icon={{name: 'delete', color: 'white'}}
+            buttonStyle={{minHeight: '100%', backgroundColor: 'red'}}
+          />
+        }>
+        <Icon name="add-to-home-screen" />
+        <ListItem.Content>
+          <ListItem.Title>Hello Swiper</ListItem.Title>
+        </ListItem.Content>
+        <ListItem.Chevron />
+      </ListItem.Swipeable>
+    </>
+  );
+}
 
-const styles = StyleSheet.create({
+let styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'grey',
+  },
+  foto: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
   },
 });
 
